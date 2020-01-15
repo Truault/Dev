@@ -10,7 +10,7 @@ from tkinter import filedialog as FD
 from tkinter import StringVar
 import PIL
 from PIL import ImageFile, ImageTk, Image
-import pdb
+
 
 
 
@@ -69,6 +69,7 @@ class Application(): #début fenêtre principale
 
       def charger_image(self):
          self.chemins = FD.askopenfilenames()
+         print (self.chemins)
          if not self.chemins:
              return
          self.chemins_image = list(self.chemins)
@@ -82,12 +83,10 @@ class Application(): #début fenêtre principale
             #fonction pour afficher l'image provenant de la listbox dans le canevas
       
       def afficher_image(self) :
-            pdb.set_trace()
-            fp =open("self.name", "rb")
-            img_file = fp.read()
             self.image = tk.Canvas(self.fenetre_canvas, width = 100, height = 100)  
             self.scbar = tk.Scrollbar(master = self.image)
-            self.image.create_image(image = img_file)
+            canvas_image = PIL.ImageTk.PhotoImage(image = self.chemins, size = 1)
+            self.image.create_image(260, 260, image = canvas_image, anchor = 'nw')
             self.image.pack(fill=tk.BOTH, expand=1)
             return
 
