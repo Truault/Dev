@@ -31,6 +31,10 @@ class Application(): #début fenêtre principale
 #debut element fenêtres secondaires contenant le canvas et les boutons 
             self.fenetre_canvas = tk.Frame (master = self.frame)
             self.fenetre_canvas.pack(side = tk.RIGHT, fill = tk.BOTH)
+            
+            self.image = tk.Canvas(self.fenetre_canvas, width = 100, height = 100)
+            self.image.pack(fill=tk.BOTH, expand=1) 
+            self.scbar = tk.Scrollbar(master = self.fenetre_canvas)
 
             self.fenetre_boutons = tk.Frame (master = self.frame)
             self.fenetre_boutons.pack(side = tk.LEFT, fill = tk.BOTH)
@@ -55,6 +59,9 @@ class Application(): #début fenêtre principale
     
             self.btn_charger = tk.Button (master = self.fenetre_image, text = "charger l'image", command =self.afficher_image)
             self.btn_charger.pack(side = tk.TOP, fill=tk.BOTH, expand=1) 
+            self.label_etiquettes=tk.Label(master = self.fenetre_image, text="chemins d'image", font=16)
+            self.label_etiquettes.pack(side=tk.TOP, fill = tk.X)
+
             
             #fin declaration boutons
 
@@ -68,7 +75,8 @@ class Application(): #début fenêtre principale
 #fonction permettant au bouton "charger" d'importer l'image dans la listbox
 
       def charger_image(self):
-         self.chemins = FD.askopenfilenames()
+         self.chemins = FD.askopenfilenames() #sort un chemin absolu
+         print (self.chemins)
          if not self.chemins:
              return
          self.chemins_image = list(self.chemins)
@@ -82,13 +90,10 @@ class Application(): #début fenêtre principale
             #fonction pour afficher l'image provenant de la listbox dans le canevas
       
       def afficher_image(self) :
-            pdb.set_trace()
-            fp =open("self.name", "rb")
-            img_file = fp.read()
-            self.image = tk.Canvas(self.fenetre_canvas, width = 100, height = 100)  
-            self.scbar = tk.Scrollbar(master = self.image)
-            self.image.create_image(image = img_file)
-            self.image.pack(fill=tk.BOTH, expand=1)
+            canvas_image = Image.open(self.absname)
+            file_image = PIL.ImageTk.PhotoImage(canvas_image, size=100)
+            self.file_image= file_image
+            self.image.create_image((0,0), image = file_image, anchor = 'nw')
             return
 
             
