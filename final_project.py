@@ -36,14 +36,20 @@ class Application(): #début fenêtre principale
             self.fenetre_canvas = tk.Frame (master = self.frame)
             self.fenetre_canvas.pack(side = tk.RIGHT, fill = tk.BOTH)
             
-            self.scbar = tk.Scrollbar(master = self.fenetre_canvas)
-            self.scbar.pack(side=tk.RIGHT, fill=tk.Y, expand=1)
-            self.xcbar = tk.Scrollbar(master = self.fenetre_canvas, orient = 'horizontal')
-            self.xcbar.pack(side=tk.BOTTOM, fill=tk.X, expand=1)
-            self.image = tk.Canvas(self.fenetre_canvas, confine=False, scrollregion = (0, 40, 0, 40), width = 1200, height = 1200)
-            self.image.pack(fill=tk.BOTH, expand=1) 
-            self.scbar.config(command = self.image.yview)
-            self.xcbar.config(command = self.image.xview)
+            
+            
+            self.image = tk.Canvas(master = self.fenetre_canvas, width=600, height=400, scrollregion=(0, 0, 1200, 800))
+            self.image.grid(row=0, column=0)
+
+            self.scrollY = tk.Scrollbar(master = self.fenetre_canvas, orient=tk.VERTICAL, command=self.image.yview)
+            self.scrollY.grid(row=0, column=1, sticky=tk.N+tk.S)
+
+            self.scrollX = tk.Scrollbar(master = self.fenetre_canvas, orient=tk.HORIZONTAL, command=self.image.xview)
+            self.scrollX.grid(row=1, column=0, sticky=tk.E+tk.W)
+
+            self.image['xscrollcommand'] = self.scrollX.set
+            self.image['yscrollcommand'] = self.scrollY.set
+
             self.image.bind("<Button-1>", self.clique_gauche)
             self.image.bind("<Button1-Motion>", self.select_plage)
     
