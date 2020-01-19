@@ -38,7 +38,7 @@ class Application(): #début fenêtre principale
             
             
             
-            self.image = tk.Canvas(master = self.fenetre_canvas, width=600, height=400, scrollregion=(0, 0, 1200, 800))
+            self.image = tk.Canvas(master = self.fenetre_canvas, width=1200, height=800, scrollregion=(0, 0, 2400, 2000))
             self.image.grid(row=0, column=0)
 
             self.scrollY = tk.Scrollbar(master = self.fenetre_canvas, orient=tk.VERTICAL, command=self.image.yview)
@@ -114,7 +114,7 @@ class Application(): #début fenêtre principale
       
       def afficher_image(self) :
             canvas_image = Image.open(self.absname)
-            file_image = PIL.ImageTk.PhotoImage(canvas_image,size= 10)
+            file_image = PIL.ImageTk.PhotoImage(canvas_image,size= 2)
             self.file_image= file_image
             self.image.create_image((0,0), image = file_image, anchor = 'nw')
             return
@@ -158,6 +158,7 @@ class Application(): #début fenêtre principale
              self.rectangle = self.image.create_rectangle(self.position[0], self.position[1],\
                                                   self.position[2], self.position[3], \
                                                   outline='red', width=2)
+            self.image.focus(self.rectangle)
 
 
 
